@@ -1,0 +1,1337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://namespaces.gsma.org/esim-messaging/1"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:rps="http://namespaces.gsma.org/esim-messaging/1"
+	xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+	ds:schemaLocation="xmldsig-core-schema.xsd"
+	elementFormDefault="qualified">
+
+	<import namespace="http://www.w3.org/2000/09/xmldsig#"
+			schemaLocation="xmldsig-core-schema.xsd"/>
+
+
+<xs:annotation><xs:documentation>GSMA defined Common Types</xs:documentation></xs:annotation>
+	
+	<xs:complexType name="BaseNotificationType">
+		<xs:sequence>
+			<xs:element name="FunctionCallIdentifier" 		type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BaseRequestType">
+		<xs:sequence>
+			<xs:element name="FunctionCallIdentifier" 		type="xs:string" />
+			<xs:element name="ValidityPeriod" 				type="xs:positiveInteger" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BaseResponseType">
+		<xs:sequence>
+			<xs:element name="ProcessingStart" 				type="xs:dateTime" />
+			<xs:element name="ProcessingEnd" 				type="xs:dateTime" />
+			<xs:element name="AcceptableValidityPeriod"		type="xs:positiveInteger" />
+			<xs:element name="FunctionExecutionStatus"		type="rps:ExecutionStatusType" />
+		</xs:sequence>
+	</xs:complexType>	
+	<xs:complexType name="ExecutionStatusType">
+		<xs:sequence>
+			<xs:element name="Status" 			type="rps:StatusType" />
+			<xs:element name="StatusCodeData"	type="rps:StatusCodeDataType" />
+		</xs:sequence>
+	</xs:complexType>	
+	<xs:complexType name="StatusCodeDataType">
+		<xs:sequence>
+			<xs:element name="Subject" 				type="rps:ObjectIdentifierType" />
+			<xs:element name="Reason" 				type="rps:ObjectIdentifierType" />
+			<xs:element name="SubjectIdentifier" 	type="xs:string" />
+			<xs:element name="Message" 				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+<xs:annotation><xs:documentation>GSMA defined Simple Types</xs:documentation></xs:annotation>
+
+	<xs:simpleType name="AIDType">
+		<xs:restriction base="xs:hexBinary">
+			<xs:minLength value="5" />
+			<xs:maxLength value="16" />
+		</xs:restriction>
+	</xs:simpleType>		
+	<xs:simpleType name="EIDType">
+		<xs:restriction base="xs:hexBinary">
+			<xs:length value="16" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ICCIDType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IMSIType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="15" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MSISDNType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="15" />
+		</xs:restriction>
+	</xs:simpleType>	
+	<xs:simpleType name="ObjectIdentifierType">
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>	
+	<xs:simpleType name="TARType">
+		<xs:restriction base="xs:hexBinary">
+			<xs:length value="3" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ThreeDigitVersionType">
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="KeyCodingType">
+		<xs:restriction base="hexBinary"/>
+	</xs:simpleType>
+	<xs:simpleType name="KeyIndexType">
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+	<xs:simpleType name="KeysetVersionType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="KeysetUsageType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="MessageType">
+		<xs:restriction	base="xs:string">
+			<xs:enumeration value="ES1-RegisterEISRequest"/>
+			<xs:enumeration value="ES1-RegisterEISResponse"/>
+			<xs:enumeration value="ES2-GetEISRequest"/>
+			<xs:enumeration value="ES2-GetEISResponse"/>
+			<xs:enumeration value="ES2-DownloadProfileRequest"/>
+			<xs:enumeration value="ES2-DownloadProfileResponse"/>
+			<xs:enumeration value="ES2-UpdatePolicyRulesRequest"/>
+			<xs:enumeration value="ES2-UpdatePolicyRulesResponse"/>
+			<xs:enumeration value="ES2-UpdateSubscriptionAddressRequest"/>
+			<xs:enumeration value="ES2-UpdateSubscriptionAddressResponse"/>
+			<xs:enumeration value="ES2-EnableProfileRequest"/>
+			<xs:enumeration value="ES2-EnableProfileResponse"/>
+			<xs:enumeration value="ES2-DisableProfileRequest"/>
+			<xs:enumeration value="ES2-DisableProfileResponse"/>
+			<xs:enumeration value="ES2-DeleteProfileRequest"/>
+			<xs:enumeration value="ES2-DeleteProfileResponse"/>
+			<xs:enumeration value="ES2-HandleProfileDisabledNotification"/>
+			<xs:enumeration value="ES2-HandleProfileEnabledNotification"/>
+			<xs:enumeration value="ES2-HandleSMSRChangeNotification"/>
+			<xs:enumeration value="ES2-HandleProfileDeletedNotification"/>
+			<xs:enumeration value="ES3-GetEISRequest"/>
+			<xs:enumeration value="ES3-GetEISResponse"/>
+			<xs:enumeration value="ES3-AuditEISRequest"/>
+			<xs:enumeration value="ES3-AuditEISResponse"/>
+			<xs:enumeration value="ES3-CreateISDPRequest"/>
+			<xs:enumeration value="ES3-CreateISDPResponse"/>
+			<xs:enumeration value="ES3-SendDataRequest"/>
+			<xs:enumeration value="ES3-SendDataResponse"/>
+			<xs:enumeration value="ES3-ProfileDownloadCompletedRequest"/>
+			<xs:enumeration value="ES3-ProfileDownloadCompletedResponse"/>
+			<xs:enumeration value="ES3-UpdatePolicyRulesRequest"/>
+			<xs:enumeration value="ES3-UpdatePolicyRulesResponse"/>
+			<xs:enumeration value="ES3-UpdateSubscriptionAddressRequest"/>
+			<xs:enumeration value="ES3-UpdateSubscriptionAddressResponse"/>
+			<xs:enumeration value="ES3-EnableProfileRequest"/>
+			<xs:enumeration value="ES3-EnableProfileResponse"/>
+			<xs:enumeration value="ES3-DisableProfileRequest"/>
+			<xs:enumeration value="ES3-DisableProfileResponse"/>
+			<xs:enumeration value="ES3-DeleteISDPRequest"/>
+			<xs:enumeration value="ES3-DeleteISDPResponse"/>
+			<xs:enumeration value="ES3-UpdateConnectivityParametersRequest"/>
+			<xs:enumeration value="ES3-UpdateConnectivityParametersResponse"/>
+			<xs:enumeration value="ES3-HandleProfileDisabledNotification"/>
+			<xs:enumeration value="ES3-HandleProfileEnabledNotification"/>
+			<xs:enumeration value="ES3-HandleSMSRChangeNotification"/>
+			<xs:enumeration value="ES3-HandleProfileDeletedNotification"/>
+			<xs:enumeration value="ES4-GetEISRequest"/>
+			<xs:enumeration value="ES4-GetEISResponse"/>
+			<xs:enumeration value="ES4-UpdatePolicyRulesRequest"/>
+			<xs:enumeration value="ES4-UpdatePolicyRulesResponse"/>
+			<xs:enumeration value="ES4-UpdateSubscriptionAddressRequest"/>
+			<xs:enumeration value="ES4-UpdateSubscriptionAddressResponse"/>
+			<xs:enumeration value="ES4-AuditEISRequest"/>
+			<xs:enumeration value="ES4-AuditEISResponse"/>
+			<xs:enumeration value="ES4-EnableProfileRequest"/>
+			<xs:enumeration value="ES4-EnableProfileResponse"/>
+			<xs:enumeration value="ES4-DisableProfileRequest"/>
+			<xs:enumeration value="ES4-DisableProfileResponse"/>
+			<xs:enumeration value="ES4-DeleteProfileRequest"/>
+			<xs:enumeration value="ES4-DeleteProfileResponse"/>
+			<xs:enumeration value="ES4-PrepareSMSRChangeRequest"/>
+			<xs:enumeration value="ES4-PrepareSMSRChangeResponse"/>
+			<xs:enumeration value="ES4-HandleProfileDisabledNotification"/>
+			<xs:enumeration value="ES4-HandleProfileEnabledNotification"/>
+			<xs:enumeration value="ES4-HandleSMSRChangeNotification"/>
+			<xs:enumeration value="ES4-HandleProfileDeletionNotification"/>
+			<xs:enumeration value="ES7-CreateAdditionalKeySetRequest"/>
+			<xs:enumeration value="ES7-CreateAdditionalKeySetResponse"/>
+			<xs:enumeration value="ES7-HandoverEUICCRequest"/>
+			<xs:enumeration value="ES7-HandoverEUICCResponse"/>
+			<xs:enumeration value="ES7-AuthenticateSMSRRequest"/>
+			<xs:enumeration value="ES7-AuthenticateSMSRResponse"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SDRoleType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="StatusType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+
+	<xs:simpleType name="POL2RuleSubjectType">
+		<xs:restriction base="string">
+			<xs:enumeration value="PROFILE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="POL2RuleActionType">
+		<xs:restriction base="string">
+			<xs:enumeration value="ENABLE"/>			
+			<xs:enumeration value="DISABLE"/>
+			<xs:enumeration value="DELETE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="POL2RuleQualificationType">
+		<xs:restriction base="string">
+			<xs:enumeration value="Not-Allowed"/>			
+			<xs:enumeration value="Auto-Delete"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+<xs:annotation><xs:documentation>GSMA defined Complex Types</xs:documentation></xs:annotation>
+
+	<xs:complexType name="AuditTrailRecordType">
+		<xs:sequence>
+			<xs:element name="Eid"							type="rps:EIDType"/>
+			<xs:element name="Smsr-id" 						type="rps:ObjectIdentifierType" />
+			<xs:element name="OperationDate" 				type="xs:dateTime" />
+			<xs:element name="OperationType" 				type="xs:hexBinary" />
+			<xs:element name="RequesterId"					type="rps:ObjectIdentifierType" />	
+			<xs:element name="OperationExecutionStatus"		type="rps:ExecutionStatusType" />
+			<xs:element name="Isd-p-aid" 					type="rps:AIDType" />
+			<xs:element name="Iccid"	 					type="rps:ICCIDType" />
+			<xs:element name="Imei" 						type="xs:hexBinary" />
+			<xs:element name="Meid" 						type="xs:hexBinary" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EISType">
+		<xs:sequence>
+			<xs:element ref="rps:EumSignedInfo" />
+			<xs:element ref="rps:EumSignature" />
+			<xs:element name="RemainingMemory"				type="xs:positiveInteger" />
+			<xs:element name="AvailableMemoryForProfiles"	type="xs:positiveInteger" />
+			<xs:element name="LastAuditDate" 				type="xs:dateTime" />
+			<xs:element name="Smsr-id" 						type="rps:ObjectIdentifierType" />
+			<xs:element ref="rps:ProfileInfo" />
+			<xs:element name="Isd-r" 						type="rps:SecurityDomainType" />
+			<xs:element name="AuditTrail" 					type="rps:AuditTrailRecordType" />
+			<xs:element ref="rps:AdditionalProperties"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntityType">
+		<xs:sequence>
+			<xs:element name="EntityId" 					type="rps:ObjectIdentifierType" />
+			<xs:element name="EntityName" 					type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GPCertificateType">
+		<xs:sequence>
+			<xs:element name="Index" type="rps:KeyIndexType" />
+			<xs:element name="CAId" type="rps:ObjectIdentifierType" />
+			<xs:element name="Value" type="xs:hexBinary" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KeyType">
+		<xs:sequence>
+			<xs:element name="Index" 		type="rps:KeyIndexType" />
+			<xs:element name="KeyComponent" type="xs:string" />
+		</xs:sequence>
+		<xs:attribute	name="kcv"/>
+	</xs:complexType>
+	<xs:complexType name="POL2Type">
+		<xs:sequence>
+			<xs:element name="Rule"	type="rps:POL2RuleType"></xs:element>		
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="POL2RuleType">
+		<xs:sequence>
+			<xs:element	name="Subject" 			type="rps:POL2RuleSubjectType"/>
+			<xs:element	name="Action"			type="rps:POL2RuleActionType"/>
+			<xs:element	name="Qualification"	type="rps:POL2RuleQualificationType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PropertyType">
+		<xs:attribute name="key">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="value" type="xs:string" />
+	</xs:complexType>
+	<xs:complexType name="SecurityDomainType">
+		<xs:sequence>
+			<xs:element name="Aid" 							type="rps:AIDType" />
+			<xs:element name="Tar" 							type="rps:TARType" />
+			<xs:element name="Sin" 							type="xs:hexBinary" />
+			<xs:element name="Sdin" 						type="xs:hexBinary" />
+			<xs:element name="Role" 						type="rps:SDRoleType" />
+			<xs:element ref="rps:Keyset" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubscriptionAddressType">
+		<xs:sequence>
+			<xs:element name="Imsi" 						type="rps:IMSIType" />
+			<xs:element name="Msisdn" 						type="rps:MSISDNType" />
+		</xs:sequence>
+	</xs:complexType>
+		
+	<xs:annotation><xs:documentation>GSMA defined Message Elements</xs:documentation></xs:annotation>
+
+	<xs:element name="RPSBody" >
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="rps:ES1-RegisterEISRequest" 				maxOccurs="1" minOccurs="0"/>
+				<xs:element	ref="rps:ES1-RegisterEISResponse" 				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-GetEISRequest"						maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-GetEISResponse"					maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-DownloadProfileRequest"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-DownloadProfileResponse"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-UpdatePolicyRulesRequest"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-UpdatePolicyRulesResponse"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-UpdateSubscriptionAddressRequest"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-UpdateSubscriptionAddressResponse"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-EnableProfileRequest"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-EnableProfileResponse"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-DisableProfileRequest"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-DisableProfileResponse"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-DeleteProfileRequest"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-DeleteProfileResponse"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-HandleProfileDisabledNotification"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-HandleProfileEnabledNotification"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-HandleSMSRChangeNotification"		maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES2-HandleProfileDeletedNotification"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-GetEISRequest"						maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-GetEISResponse"					maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-AuditEISRequest"					maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-AuditEISResponse"					maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-CreateISDPRequest"					maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-CreateISDPResponse"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-SendDataRequest"					maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-SendDataResponse"					maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-ProfileDownloadCompletedRequest"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-ProfileDownloadCompletedResponse"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-UpdatePolicyRulesRequest"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-UpdatePolicyRulesResponse"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-UpdateSubscriptionAddressRequest"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-UpdateSubscriptionAddressResponse"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-EnableProfileRequest"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-EnableProfileResponse"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-DisableProfileRequest"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-DisableProfileResponse"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-DeleteISDPRequest"					maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-DeleteISDPResponse"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-UpdateConnectivityParametersRequest"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-UpdateConnectivityParametersResponse"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-HandleProfileDisabledNotification"		maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-HandleProfileEnabledNotification"		maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-HandleSMSRChangeNotification"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES3-HandleProfileDeletedNotification"		maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-GetEISRequest"						maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-GetEISResponse"					maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-UpdatePolicyRulesRequest"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-UpdatePolicyRulesResponse"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-UpdateSubscriptionAddressRequest"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-UpdateSubscriptionAddressResponse"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-AuditEISRequest"					maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-AuditEISResponse"					maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-EnableProfileRequest"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-EnableProfileResponse"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-DisableProfileRequest"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-DisableProfileResponse"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-DeleteProfileRequest"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-DeleteProfileResponse"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-PrepareSMSRChangeRequest"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-PrepareSMSRChangeResponse"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-HandleProfileDisabledNotification"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-HandleProfileEnabledNotification"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-HandleSMSRChangeNotification"		maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES4-HandleProfileDeletionNotification"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES7-CreateAdditionalKeySetRequest"		maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES7-CreateAdditionalKeySetResponse"	maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES7-HandoverEUICCRequest"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES7-HandoverEUICCResponse"				maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES7-AuthenticateSMSRRequest"			maxOccurs="1" minOccurs="0"/>
+				<xs:element ref="rps:ES7-AuthenticateSMSRResponse"			maxOccurs="1" minOccurs="0"/>				
+		</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RPSHeader">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SenderEntity" 	type="rps:EntityType" />
+				<xs:element name="SenderName" 		type="xs:string" />
+				<xs:element name="ReceiverEntity" 	type="rps:EntityType" />
+				<xs:element name="ResponseEndpoint" type="xs:anyURI" />
+				<xs:element name="TransactionId" 	type="xs:string" />
+				<xs:element name="MessageId" 		type="xs:anyURI" />
+				<xs:element name="MessageType" 		type="rps:MessageType" />
+				<xs:element name="MessageDate" 		type="xs:dateTime" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RPSMessage" >
+		<xs:complexType >
+			<xs:sequence>
+				<xs:element ref="rps:RPSHeader" />
+				<xs:element ref="rps:RPSBody" />
+			</xs:sequence>
+		<xs:attribute	name="MessageVersion"	type="rps:ThreeDigitVersionType"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:annotation><xs:documentation>GSMA defined Complex Elements</xs:documentation></xs:annotation>
+
+	<xs:element name="AdditionalProperties">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Property" 					type="rps:PropertyType" />	
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EuiccCapabilities">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CattpSupport" 				type="xs:boolean" />
+				<xs:element name="CattpVersion"					type="rps:ThreeDigitVersionType" />
+				<xs:element name="HttpSupport" 					type="xs:boolean" />
+				<xs:element name="HttpVersion"					type="rps:ThreeDigitVersionType" />
+				<xs:element name="SecurePacketVersion"			type="rps:ThreeDigitVersionType" />
+				<xs:element name="RemoteProvisioningVersion"	type="rps:ThreeDigitVersionType" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EumSignature"		 			type="ds:SignatureType" />
+	<xs:element name="EumSignedInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Eid"							type="rps:EIDType"/>
+				<xs:element name="Eum-id" 						type="rps:ObjectIdentifierType" />
+				<xs:element name="ProductionDate" 				type="xs:dateTime" />
+				<xs:element name="PlatformType" 				type="xs:string" />
+				<xs:element name="PlatformVersion"				type="rps:ThreeDigitVersionType" />
+				<xs:element name="Isd-p-loadfile-aid" 			type="rps:AIDType" />
+				<xs:element name="Isd-p-module-aid" 			type="rps:AIDType" />
+				<xs:element name="Ecasd" 						type="rps:EIDType" />
+				<xs:element ref="rps:EuiccCapabilities" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="KeyComponent">
+		<xs:complexType>
+			<xs:attribute	name="type"		type="rps:KeyCodingType"/>
+			<xs:attribute	name="value"	type="xs:hexBinary"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Keyset" >
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Version" 			type="rps:KeysetVersionType" />
+				<xs:element name="Type" 			type="rps:KeysetUsageType" />
+				<xs:element name="Cntr" 			type="xs:nonNegativeInteger" />
+				<xs:element name="Key" 				type="rps:KeyType" 				maxOccurs="128" minOccurs="1"/>
+				<xs:element name="Certificate" 	 	type="rps:GPCertificateType" 	maxOccurs="128" minOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="ProfileInfo">
+		<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Iccid" 					type="rps:ICCIDType" />
+			<xs:element name="Isd-p-aid" 				type="rps:AIDType" />
+			<xs:element name="Mno-id" 					type="rps:ObjectIdentifierType" />
+			<xs:element name="FallbackAttribute" 		type="xs:boolean" />
+			<xs:element name="SubscriptionAddress"		type="rps:SubscriptionAddressType" />
+			<xs:element name="State" 					type="xs:string" />
+			<xs:element name="Smdp-id" 					type="rps:ObjectIdentifierType" />
+			<xs:element name="ProfileType" 				type="xs:string" />
+			<xs:element name="AllocatedMemory"			type="xs:positiveInteger" />
+			<xs:element name="FreeMemory" 				type="xs:positiveInteger" />
+			<xs:element name="Pol2" 					type="rps:POL2Type" />
+		</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+
+	<xs:annotation><xs:documentation>Functions Request and Response bodies</xs:documentation></xs:annotation>
+
+	<xs:element name="ES1-RegisterEISRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element name="Eis" type="rps:EISType" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES1-RegisterEISResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-GetEISRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element name="Eid" 				type="rps:EIDType" />
+						<xs:element name="SmSr-id"			type="rps:ObjectIdentifierType" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-GetEISResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element name="EIS" 				type="rps:EISType" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-DownloadProfileRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element name="Eid" 				type="rps:EIDType" />
+						<xs:element name="SmSr-id"			type="rps:ObjectIdentifierType" />
+						<xs:element name="PorifleType" 		type="xs:string" />
+						<xs:element name="ICCID" 			type="rps:ICCIDType" />
+						<xs:element name="EnableProfile"	type="xs:boolean" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-DownloadProfileResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element name="ICCID" 			type="rps:ICCIDType" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-UpdatePolicyRulesRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+						<xs:element	name="Iccid"	type="rps:ICCIDType"/>
+						<xs:element	name="Smsr-Id"	type="rps:ObjectIdentifierType"/>
+						<xs:element	name="pol2"		type="rps:POL2Type"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-UpdatePolicyRulesResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-UpdateSubscriptionAddressRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"					type="rps:EIDType"/>
+						<xs:element	name="Smsr-id"				type="rps:ObjectIdentifierType"/>
+						<xs:element	name="Iccid"				type="rps:ICCIDType"/>
+						<xs:element	name="SubscriptionAddress"	type="rps:SubscriptionAddressType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="ES2-UpdateSubscriptionAddressResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-EnableProfileRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+						<xs:element	name="Smsr-Id"	type="rps:ObjectIdentifierType"/>
+						<xs:element	name="Iccid"	type="rps:ICCIDType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-EnableProfileResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="ES2-DisableProfileRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element		name="Eid"		type="rps:EIDType"/>
+						<xs:element		name="Iccid"	type="rps:ICCIDType"/>
+						<xs:element		name="Smsr-id"	type="rps:ObjectIdentifierType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-DisableProfileResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-HandleProfileDisabledNotification">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseNotificationType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+						<xs:element	name="Iccid"	type="rps:ICCIDType"/>
+						<xs:element	name="CompletionTimestamp"	type="xs:dateTime"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-DeleteProfileRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"						type="rps:EIDType"/>
+						<xs:element	name="Iccid"					type="rps:ICCIDType"/>
+						<xs:element	name="Smsr-id"					type="rps:ObjectIdentifierType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-DeleteProfileResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="ES2-HandleProfileEnabledNotification">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseNotificationType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+						<xs:element	name="Iccid"	type="rps:ICCIDType"/>
+						<xs:element	name="CompletionTimestamp"	type="xs:dateTime"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="ES2-HandleSMSRChangeNotification">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseNotificationType">
+					<xs:sequence>
+						<xs:element	name="Eis"		type="rps:EISType"/>
+						<xs:element	name="CompletionTimestamp"	type="xs:dateTime"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES2-HandleProfileDeletedNotification">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseNotificationType">
+					<xs:sequence>
+						<xs:element	name="Eid"					type="rps:EIDType"/>
+						<xs:element	name="Iccid"				type="rps:ICCIDType"/>
+						<xs:element	name="CompletionTimestamp"	type="xs:dateTime"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="ES3-GetEISRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element	name="ES3-GetEISResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element	name="Eis"	type="rps:EISType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-AuditEISRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"	type="rps:EIDType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element	name="ES3-AuditEISResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element	name="Eis"	type="rps:EISType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-CreateISDPRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element		name="Eid"				type="rps:EIDType"/>
+						<xs:element		name="Iccid"			type="rps:ICCIDType"/>
+						<xs:element		name="Mno-id"			type="rps:ObjectIdentifierType"/>
+						<xs:element		name="RequiredMemory"	type="xs:integer"/>
+						<xs:element		name="MoreToDo"			type="xs:boolean"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-CreateISDPResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element		name="Isd-p-aid"			type="rps:AIDType"/>
+						<xs:element		name="EuiccResponseData"	type="xs:hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-SendDataRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element		name="Eid"		type="rps:EIDType"/>
+						<xs:element		name="sd-aid"	type="rps:ObjectIdentifierType"/>
+						<xs:element		name="Data"		type="xs:hexBinary"/>
+						<xs:element		name="MoreToDo"	type="xs:boolean"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-SendDataResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element		name="EuiccResponseData"	type="xs:hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-ProfileDownloadCompletedRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element		name="Eid"						type="rps:EIDType"/>
+						<xs:element		name="Iccid"					type="rps:ICCIDType"/>
+						<xs:element		name="ProfileType"				type="xs:string"/>
+						<xs:element		name="SubscriptionAddress"		type="rps:SubscriptionAddressType"/>
+						<xs:element		name="pol2"						type="rps:POL2Type"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-ProfileDownloadCompletedResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="ES3-UpdatePolicyRulesRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+						<xs:element	name="Iccid"	type="rps:ICCIDType"/>
+						<xs:element	name="pol2"		type="rps:POL2Type"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-UpdatePolicyRulesResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="ES3-UpdateSubscriptionAddressRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"						type="rps:EIDType"/>
+						<xs:element	name="Iccid"					type="rps:ICCIDType"/>
+						<xs:element	name="NewSubscriptionAddress"	type="rps:SubscriptionAddressType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-UpdateSubscriptionAddressResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="ES3-EnableProfileRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"						type="rps:EIDType"/>
+						<xs:element	name="Iccid"					type="rps:ICCIDType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-EnableProfileResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element	name="EuiccResponseData"			type="xs:hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="ES3-DisableProfileRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"						type="rps:EIDType"/>
+						<xs:element	name="Iccid"					type="rps:ICCIDType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-DisableProfileResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element	name="EuiccResponseData"			type="xs:hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="ES3-DeleteISDPRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"						type="rps:EIDType"/>
+						<xs:element	name="Iccid"					type="rps:ICCIDType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-DeleteISDPResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element	name="EuiccResponseData"			type="xs:hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="ES3-UpdateConnectivityParametersRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"						type="rps:EIDType"/>
+						<xs:element	name="Iccid"					type="rps:ICCIDType"/>
+						<xs:element	name="ConnectivityParameters"	type="xs:hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-UpdateConnectivityParametersResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element	name="EuiccResponseData"			type="xs:hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="ES3-HandleProfileDisabledNotification">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseNotificationType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+						<xs:element	name="Iccid"	type="rps:ICCIDType"/>
+						<xs:element	name="Mno-id"	type="rps:ObjectIdentifierType"/>
+						<xs:element	name="CompletionTimestamp"	type="xs:dateTime"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-HandleProfileEnabledNotification">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseNotificationType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+						<xs:element	name="Iccid"	type="rps:ICCIDType"/>
+						<xs:element	name="Mno-id"	type="rps:ObjectIdentifierType"/>
+						<xs:element	name="CompletionTimestamp"	type="xs:dateTime"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-HandleSMSRChangeNotification">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseNotificationType">
+					<xs:sequence>
+						<xs:element	name="Eis"		type="rps:EISType"/>
+						<xs:element	name="CompletionTimestamp"	type="xs:dateTime"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES3-HandleProfileDeletedNotification">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseNotificationType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+						<xs:element	name="Iccid"	type="rps:ICCIDType"/>
+						<xs:element	name="Mno-id"	type="rps:ObjectIdentifierType"/>
+						<xs:element	name="CompletionTimestamp"	type="xs:dateTime"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="ES4-GetEISRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element	name="ES4-GetEISResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element	name="Eis"	type="rps:EISType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-UpdatePolicyRulesRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+						<xs:element	name="Iccid"	type="rps:ICCIDType"/>
+						<xs:element	name="pol2"		type="rps:POL2Type"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-UpdatePolicyRulesResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-UpdateSubscriptionAddressRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"						type="rps:EIDType"/>
+						<xs:element	name="Iccid"					type="rps:ICCIDType"/>
+						<xs:element	name="NewSubscriptionAddress"	type="rps:SubscriptionAddressType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-UpdateSubscriptionAddressResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-AuditEISRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"	type="rps:EIDType"/>
+						<xs:element	name="Iccid"	type="rps:ICCIDType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element	name="ES4-AuditEISResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element	name="Eis"	type="rps:EISType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-EnableProfileRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"						type="rps:EIDType"/>
+						<xs:element	name="Iccid"					type="rps:ICCIDType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-EnableProfileResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element	name="EuiccResponseData"			type="xs:hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-DisableProfileRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"						type="rps:EIDType"/>
+						<xs:element	name="Iccid"					type="rps:ICCIDType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-DisableProfileResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element	name="EuiccResponseData"			type="xs:hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="ES4-DeleteProfileRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"						type="rps:EIDType"/>
+						<xs:element	name="Iccid"					type="rps:ICCIDType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-DeleteProfileResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element	name="EuiccResponseData"			type="xs:hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-PrepareSMSRChangeRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"						type="rps:EIDType"/>
+						<xs:element	name="CurrentSMSRid"			type="rps:ObjectIdentifierType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-PrepareSMSRChangeResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-SMSRChangeRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element	name="Eid"						type="rps:EIDType"/>
+						<xs:element	name="Target-Smsr-id"			type="rps:ObjectIdentifierType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-SMSRChangeResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-HandleProfileDisabledNotification">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseNotificationType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+						<xs:element	name="Iccid"	type="rps:ICCIDType"/>
+						<xs:element	name="CompletionTimestamp"	type="xs:dateTime"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-HandleProfileEnabledNotification">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseNotificationType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+						<xs:element	name="Iccid"	type="rps:ICCIDType"/>
+						<xs:element	name="CompletionTimestamp"	type="xs:dateTime"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-HandleSMSRChangeNotification">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseNotificationType">
+					<xs:sequence>
+						<xs:element	name="Eis"		type="rps:EISType"/>
+						<xs:element	name="CompletionTimestamp"	type="xs:dateTime"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES4-HandleProfileDeletionNotification">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseNotificationType">
+					<xs:sequence>
+						<xs:element	name="Eid"		type="rps:EIDType"/>
+						<xs:element	name="Iccid"	type="rps:ICCIDType"/>
+						<xs:element	name="CompletionTimestamp"	type="xs:dateTime"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	
+	<xs:element name="ES7-CreateAdditionalKeySetRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element		name="Eid"						type="rps:EIDType"/>
+						<xs:element		name="KeyVersionNumber"			type="rps:KeysetVersionType"/>
+						<xs:element		name="InitialSequenceCounter"	type="xs:integer"/>
+						<xs:element		name="ECCKeyLength"				type="xs:integer"/>
+						<xs:element		name="Scenario"					type="xs:byte"/>
+						<xs:element		name="Hostid"					type="xs:hexBinary"/>
+						<xs:element		name="EphemeralPublicKey"		type="xs:hexBinary"/>
+						<xs:element		name="Signature"				type="xs:hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES7-CreateAdditionalKeySetResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element		name="DerivationRandom"		type="xs:hexBinary"/>
+						<xs:element		name="Receipt"				type="xs:hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES7-HandoverEUICCRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element		name="Eis"						type="rps:EISType"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES7-HandoverEUICCResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="ES7-AuthenticateSMSRRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseRequestType">
+					<xs:sequence>
+						<xs:element		name="Eis"						type="rps:EISType"/>
+						<xs:element		name="SmsrCertificate"			type="hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ES7-AuthenticateSMSRResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rps:BaseResponseType">
+					<xs:sequence>
+						<xs:element		name="RandomChallenge"			type="hexBinary"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+</schema>
