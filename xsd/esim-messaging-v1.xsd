@@ -399,19 +399,19 @@
 	<xs:element name="AdditionalProperties">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Property" 					type="rps:PropertyType" />	
+				<xs:element name="Property"    type="rps:PropertyType" />	
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="EuiccCapabilities">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="CattpSupport" 		type="xs:boolean" />
-				<xs:element name="CattpVersion"			type="rps:ThreeDigitVersionType" />
-				<xs:element name="HttpSupport" 			type="xs:boolean" />
-				<xs:element name="HttpVersion"			type="rps:ThreeDigitVersionType" />
-				<xs:element name="SecurePacketVersion"		type="rps:ThreeDigitVersionType" />
-				<xs:element name="RemoteProvisioningVersion"	type="rps:ThreeDigitVersionType" />
+				<xs:element name="CattpSupport"                type="xs:boolean" />
+				<xs:element name="CattpVersion"                type="rps:ThreeDigitVersionType" />
+				<xs:element name="HttpSupport"                 type="xs:boolean" />
+				<xs:element name="HttpVersion"                 type="rps:ThreeDigitVersionType" />
+				<xs:element name="SecurePacketVersion"         type="rps:ThreeDigitVersionType" />
+				<xs:element name="RemoteProvisioningVersion"   type="rps:ThreeDigitVersionType" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -419,49 +419,49 @@
 	<xs:element name="EumSignedInfo">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Eid"					type="rps:EIDType"/>
-				<xs:element name="Eum-id" 				type="rps:ObjectIdentifierType" />
-				<xs:element name="ProductionDate" 			type="xs:dateTime" />
-				<xs:element name="PlatformType" 			type="xs:string" />
-				<xs:element name="PlatformVersion"			type="rps:ThreeDigitVersionType" />
-				<xs:element name="Isd-p-loadfile-aid" 			type="rps:AIDType" />
-				<xs:element name="Isd-p-module-aid" 			type="rps:AIDType" />
-				<xs:element name="Ecasd" 				type="rps:EIDType" />
+				<xs:element name="Eid"                type="rps:EIDType"/>
+				<xs:element name="Eum-id"             type="rps:ObjectIdentifierType" />
+				<xs:element name="ProductionDate"     type="xs:dateTime" />
+				<xs:element name="PlatformType"       type="xs:string" />
+				<xs:element name="PlatformVersion"    type="rps:ThreeDigitVersionType" />
+				<xs:element name="Isd-p-loadfile-aid" type="rps:AIDType" />
+				<xs:element name="Isd-p-module-aid"   type="rps:AIDType" />
+				<xs:element name="Ecasd"              type="rps:EIDType" />
 				<xs:element ref="rps:EuiccCapabilities" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="KeyComponent">
 		<xs:complexType>
-			<xs:attribute	name="type"	type="rps:KeyCodingType"/>
-			<xs:attribute	name="value"	type="xs:hexBinary"/>
+			<xs:attribute	name="type"    type="rps:KeyCodingType"/>
+			<xs:attribute	name="value"   type="xs:hexBinary"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="Keyset" >
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Version" 		type="rps:KeysetVersionType" />
-				<xs:element name="Type" 		type="rps:KeysetUsageType" />
-				<xs:element name="Cntr" 		type="xs:nonNegativeInteger" />
-				<xs:element name="Key" 			type="rps:KeyType" 		maxOccurs="128" minOccurs="1"/>
-				<xs:element name="Certificate" 	 	type="rps:GPCertificateType" 	maxOccurs="128" minOccurs="1"/>
+				<xs:element name="Version"      type="rps:KeysetVersionType" />
+				<xs:element name="Type"         type="rps:KeysetUsageType" />
+				<xs:element name="Cntr"         type="xs:nonNegativeInteger" />
+				<xs:element name="Key"          type="rps:KeyType"            maxOccurs="128" minOccurs="1"/>
+				<xs:element name="Certificate"  type="rps:GPCertificateType"  maxOccurs="128" minOccurs="1"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>	
 	<xs:element name="ProfileInfo">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Iccid" 			type="rps:ICCIDType" />
-			<xs:element name="Isd-p-aid" 			type="rps:AIDType" />
-			<xs:element name="Mno-id" 			type="rps:ObjectIdentifierType" />
-			<xs:element name="FallbackAttribute" 		type="xs:boolean" />
-			<xs:element name="SubscriptionAddress"		type="rps:SubscriptionAddressType" />
-			<xs:element name="State" 			type="xs:string" />
-			<xs:element name="Smdp-id" 			type="rps:ObjectIdentifierType" />
-			<xs:element name="ProfileType" 			type="xs:string" />
-			<xs:element name="AllocatedMemory"		type="xs:positiveInteger" />
-			<xs:element name="FreeMemory" 			type="xs:positiveInteger" />
-			<xs:element name="Pol2" 			type="rps:POL2Type" />
+			<xs:element name="Iccid"                type="rps:ICCIDType" />
+			<xs:element name="Isd-p-aid"            type="rps:AIDType" />
+			<xs:element name="Mno-id"               type="rps:ObjectIdentifierType" />
+			<xs:element name="FallbackAttribute"    type="xs:boolean" />
+			<xs:element name="SubscriptionAddress"  type="rps:SubscriptionAddressType" />
+			<xs:element name="State"                type="xs:string" />
+			<xs:element name="Smdp-id"              type="rps:ObjectIdentifierType" />
+			<xs:element name="ProfileType"          type="xs:string" />
+			<xs:element name="AllocatedMemory"      type="xs:positiveInteger" />
+			<xs:element name="FreeMemory"           type="xs:positiveInteger" />
+			<xs:element name="Pol2"                 type="rps:POL2Type" />
 		</xs:sequence>
 	</xs:complexType>
 	</xs:element>
@@ -515,10 +515,10 @@
 			<xs:complexContent>
 				<xs:extension base="rps:BaseRequestType">
 					<xs:sequence>
-						<xs:element name="Eid" 			type="rps:EIDType" />
-						<xs:element name="SmSr-id"		type="rps:ObjectIdentifierType" />
+						<xs:element name="Eid" 			    type="rps:EIDType" />
+						<xs:element name="SmSr-id"		    type="rps:ObjectIdentifierType" />
 						<xs:element name="PorifleType" 		type="xs:string" />
-						<xs:element name="ICCID" 		type="rps:ICCIDType" />
+						<xs:element name="ICCID" 		    type="rps:ICCIDType" />
 						<xs:element name="EnableProfile"	type="xs:boolean" />
 					</xs:sequence>
 				</xs:extension>
